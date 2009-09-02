@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="BuildDoc" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"> 
+  
+  <PropertyGroup>
+    <ToolPath>tools</ToolPath>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ClassLibraryOutputDirectory>bin\$(Configuration)</ClassLibraryOutputDirectory>
+    <ProjectDir>src</ProjectDir>
+    <ProjectTestDir>tests</ProjectTestDir >
+    <ProjectName>TasklistGenerator</ProjectName >
+    <ProjectFile>$(ProjectName).sln</ProjectFile >
+  </PropertyGroup>
+  
+	<UsingTask AssemblyFile="$(ToolPath)\gallio\Gallio.MSBuildTasks.dll" TaskName="Gallio" />
+	<UsingTask AssemblyFile="$(ToolPath)\TasklistGenerator\TasklistGenerator.dll" TaskName="Tasklist" />
+	
+
+  <Target Name="Clean">
+    <ItemGroup>
+      <BinFiles Include="*/bin" />
+      <BinFiles Include="**/obj" />
+    </ItemGroup>
+	<Message Text="====DELETE===" />
+    <RemoveDir Directories="@(BinFiles)" />
+  </Target>  
+  
+<Target Name="Build" DependsOnTargets="Clean">
+    <MSBuild Projects="$(ProjectFile)" Properties="Configuration=Debug" />
+</Target>
+  
+<Target Name="Test" DependsOnTargets="Build">
+	<Message Text="==== Gallio ===" />
+	
+	<CreateItem Include="tests\*\bin\Debug\*Tests.dll">
+      <Output TaskParameter="Include" ItemName="TestAssemblies" />
+    </CreateItem>
+	<Message Text="==== @(TestAssemblies) ===" />
+    <Gallio RunnerExtensions="TeamCityExtension,Gallio.TeamCityIntegration"
+        Assemblies="@(TestAssemblies)"  /> 
+</Target>
+
+<Target Name="tasklist" >
+	<Message Text="==== Generate tasklist ===" />
+	
+	<CreateItem Include="src\**\*.cs">
+      <Output TaskParameter="Include" ItemName="Sourcefiles" />
+    </CreateItem>
+	<Message Text="==== @(Sourcefiles) ===" />
+    <Tasklist Files="@(Sourcefiles)" OutputFile="taskst.html" /> 
+</Target>
+
+
+
+
+
+
+</Project>
