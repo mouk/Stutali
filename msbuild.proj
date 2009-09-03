@@ -6,30 +6,31 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <ClassLibraryOutputDirectory>bin\$(Configuration)</ClassLibraryOutputDirectory>
     <ProjectDir>src</ProjectDir>
-    <ProjectTestDir>tests</ProjectTestDir >
+    <ProjectTestDir>tests</ProjectTestDir>
+    <Docdir>doc</Docdir>
     <ProjectName>TasklistGenerator</ProjectName >
     <ProjectFile>$(ProjectName).sln</ProjectFile >
   </PropertyGroup>
   
 	<UsingTask AssemblyFile="$(ToolPath)\gallio\Gallio.MSBuildTasks.dll" TaskName="Gallio" />
 	<UsingTask AssemblyFile="$(ToolPath)\TasklistGenerator\TasklistGenerator.dll" TaskName="Tasklist" />
-	
 
   <Target Name="Clean">
+	<Message Text="==== Cleaning directories ===" />
     <ItemGroup>
       <BinFiles Include="*/bin" />
       <BinFiles Include="**/obj" />
     </ItemGroup>
-	<Message Text="====DELETE===" />
     <RemoveDir Directories="@(BinFiles)" />
   </Target>  
   
 <Target Name="Build" DependsOnTargets="Clean">
+	<Message Text="==== Compiling projects ===" />
     <MSBuild Projects="$(ProjectFile)" Properties="Configuration=Debug" />
 </Target>
   
 <Target Name="Test" DependsOnTargets="Build">
-	<Message Text="==== Gallio ===" />
+	<Message Text="==== Starting Gallio to run tests ===" />
 	
 	<CreateItem Include="tests\*\bin\Debug\*Tests.dll">
       <Output TaskParameter="Include" ItemName="TestAssemblies" />
@@ -41,17 +42,11 @@
 
 <Target Name="tasklist" >
 	<Message Text="==== Generate tasklist ===" />
-	
+
 	<CreateItem Include="src\**\*.cs">
       <Output TaskParameter="Include" ItemName="Sourcefiles" />
     </CreateItem>
-	<Message Text="==== @(Sourcefiles) ===" />
-    <Tasklist Files="@(Sourcefiles)" OutputFile="taskst.html" /> 
+    <Tasklist Files="@(Sourcefiles)" OutputFile="$(docdir)\tasks.html" /> 
 </Target>
-
-
-
-
-
 
 </Project>
