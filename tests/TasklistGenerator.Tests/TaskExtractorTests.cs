@@ -16,6 +16,7 @@ namespace TasklistGenerator.Tests
         public TaskExtractorTests()
         {
             _theExtractor = new TaskExtractor("TODO");
+            _theExtractor.Priority = 1;
            //_reader = new StringReader("//TODO " + _simpleTask);
         }
 
@@ -26,7 +27,15 @@ namespace TasklistGenerator.Tests
             var task = _theExtractor.Extract("//TODO " + _simpleTask);
             Assert.Equal("TODO",task.Name);
         }
+        
 
+        [Fact]
+        public void ExtractTasks_StringReadWithTaskAfterPriorityWasSpecified_PrioritySet()
+        {
+            var task = _theExtractor.Extract("//TODO " + _simpleTask);
+            Assert.Equal(1,task.Priority);
+        }
+        
         [Fact]
         public void ExtractTasks_TODOSeperatedbySpace_NameIsExtracted()
         {

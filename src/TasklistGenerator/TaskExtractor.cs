@@ -1,3 +1,4 @@
+using System;
 using System.Text.RegularExpressions;
 
 namespace TasklistGenerator
@@ -11,6 +12,8 @@ namespace TasklistGenerator
             _pattern = new Regex(@"//\s?(?<Name>" + taskName + @")(?<Text>.*)");
         }
 
+        public int Priority { get; set; }
+
         public TaskToken Extract(string line)
         {
             var match = _pattern.Match(line);
@@ -20,7 +23,8 @@ namespace TasklistGenerator
             return new TaskToken
                        {
                            Name = match.Groups["Name"].Value,
-                           Text = match.Groups["Text"].Value.Trim()
+                           Text = match.Groups["Text"].Value.Trim(),
+                           Priority = Priority
                        };
         }
     }

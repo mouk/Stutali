@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4BD8BDDC-0D78-44DC-9F0D-851064AD3E48}</ProjectGuid>
+    <ProjectGuid>{8F239D57-BCF5-4304-AA5F-7E785D10AA31}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TasklistGenerator</RootNamespace>
-    <AssemblyName>TasklistGenerator</AssemblyName>
+    <RootNamespace>Stutali.Tests</RootNamespace>
+    <AssemblyName>Stutali.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,13 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Build.Framework" />
-    <Reference Include="Microsoft.Build.Utilities.v3.5">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="StructureMap, Version=2.5.3.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+    <Reference Include="Moq, Version=3.5.716.1, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\StructureMap.dll</HintPath>
+      <HintPath>..\..\lib\Moq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -51,21 +47,27 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="xunit, Version=1.4.9.1465, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\xunit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectoryFileExtractor.cs" />
-    <Compile Include="Factory.cs" />
-    <Compile Include="FileTaskExtractor.cs" />
-    <Compile Include="ITaskExtractor.cs" />
-    <Compile Include="ITaskTokenFormatter.cs" />
+    <Compile Include="Integration\FactoryTests.cs" />
+    <Compile Include="FileTaskExtractorTests.cs" />
+    <Compile Include="FolderUtility.cs" />
+    <Compile Include="Integration\IntegrationBase.cs" />
+    <Compile Include="Integration\TaskReportGereratorTests.cs" />
+    <Compile Include="PathIterator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReaderTaskExtractor.cs" />
-    <Compile Include="TaskExtractor.cs" />
-    <Compile Include="Tasklist.cs" />
-    <Compile Include="TaskReportGererator.cs" />
-    <Compile Include="TaskToken.cs" />
-    <Compile Include="TaskTokenFormatter.cs" />
-    <Compile Include="XmlTaskTokenFormatter.cs" />
+    <Compile Include="TaskExtractorTests.cs" />
+    <Compile Include="TaskManagerTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\TasklistGenerator\Stutali.csproj">
+      <Project>{4BD8BDDC-0D78-44DC-9F0D-851064AD3E48}</Project>
+      <Name>Stutali</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

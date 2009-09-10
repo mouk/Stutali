@@ -8,12 +8,12 @@
     <ProjectDir>src</ProjectDir>
     <ProjectTestDir>tests</ProjectTestDir>
     <Docdir>doc</Docdir>
-    <ProjectName>TasklistGenerator</ProjectName >
+    <ProjectName>Stutali</ProjectName >
     <ProjectFile>$(ProjectName).sln</ProjectFile >
   </PropertyGroup>
   
 	<UsingTask AssemblyFile="$(ToolPath)\gallio\Gallio.MSBuildTasks.dll" TaskName="Gallio" />
-	<UsingTask AssemblyFile="$(ToolPath)\TasklistGenerator\TasklistGenerator.dll" TaskName="Tasklist" />
+	<UsingTask AssemblyFile="$(ToolPath)\Stutali\Stutali.dll" TaskName="Tasklist" />
 
   <Target Name="Clean">
 	<Message Text="==== Cleaning directories ===" />
@@ -46,7 +46,7 @@
 	<CreateItem Include="src\**\*.cs">
       <Output TaskParameter="Include" ItemName="Sourcefiles" />
     </CreateItem>
-    <Tasklist Files="@(Sourcefiles)" OutputFile="$(docdir)\tasks.html" /> 
+    <Tasklist Files="@(Sourcefiles)" OutputFile="tasks.html" /> 
 </Target>
 
 </Project>

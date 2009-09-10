@@ -27,7 +27,12 @@ namespace TasklistGenerator
                                                                 });
                                               registry.BuildInstancesOf<IList<ITaskExtractor>>()
                                                   .AddInstances(ding
-                                                                => ding.IsThis(new[] {new TaskExtractor("TODO")})
+                                                                => ding.IsThis(new[]
+                                                                                   {
+                                                                                       new TaskExtractor("TODO"){Priority = 1},
+                                                                                       new TaskExtractor("HACK"){Priority = 1},
+                                                                                       new TaskExtractor("FIXME"){Priority = 1}
+                                                                                   })
                                                   );
 
                                           }

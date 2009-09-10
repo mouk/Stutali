@@ -15,12 +15,20 @@ namespace TasklistGenerator.Tests
         private ReaderTaskExtractor _theExtractor;
 
         private Mock<ITaskExtractor> _extractorMock;
+        private Mock<ITaskExtractor> _secondExtractorMock;
 
         
         public TaskManagerTests()
         {
             _extractorMock = new Mock<ITaskExtractor>();
-            _theExtractor = new ReaderTaskExtractor(new[] { _extractorMock.Object});
+            _secondExtractorMock = new Mock<ITaskExtractor>();
+            _theExtractor = new ReaderTaskExtractor(
+                new[]
+                    {
+                        _extractorMock.Object,
+                        _secondExtractorMock .Object
+                    }
+            );
         }
 
    
@@ -34,6 +42,7 @@ namespace TasklistGenerator.Tests
                                 "second line",
                                 "third line"
                             };
+            var secondLines = new List<string>(lines);
 
             var text = lines.Aggregate((a, b) => a + "\n" + b);
 
@@ -43,6 +52,14 @@ namespace TasklistGenerator.Tests
                     {
                         Assert.Contains(line, lines);
                         lines.Remove(line);
+                    }
+                );
+
+            _secondExtractorMock.Setup(ext => ext.Extract(It.IsAny<string>())).Callback(
+                (string line) =>
+                    {
+                        Assert.Contains(line, secondLines);
+                        secondLines.Remove(line);
                     }
                 );
 
